@@ -38,12 +38,29 @@ public class ClientSMTP {
 
             while (!Pattern.matches("[1-9]{3} ", in.readLine())) {}
 
-            out.write(new StringBuilder("MAIL FROM: ").append(this.hostname).toString());
+            out.write(new StringBuilder("MAIL FROM: ").append(from).toString());
+            out.newLine();
+            out.flush();
 
             if (Pattern.matches("^[4-5]", in.readLine())) {
                 throw new Exception("SMTP error");
             }
-            
+
+            out.write(new StringBuilder("RCPT TO: ").append(to).toString());
+            out.newLine();
+            out.flush();
+
+            if (Pattern.matches("^[4-5]", in.readLine())) {
+                throw new Exception("SMTP error");
+            }
+
+            out.write("DATA");
+            out.newLine();
+            out.flush();
+
+            if (Pattern.matches("^[4-5]", in.readLine())) {
+                throw new Exception("SMTP error");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
