@@ -7,7 +7,13 @@ public class Main {
         //salut.run(5);
         //ServeurEchoThreade toto = new ServeurEchoThreade(50007);
         //toto.run(5);
-        ServeurTcpEchoPool maPiscine = new ServeurTcpEchoPool(5, 50007, 2);
-        maPiscine.run();
+        //ServeurTcpEchoPool maPiscine = new ServeurTcpEchoPool(5, 50007, 2);
+        //maPiscine.run();
+        //ClientSMTP monClientSympa = new ClientSMTP("pluton.aix.univ-amu.fr", 25, "drabczuk");
+        //monClientSympa.sendMail("anonymousseEnCocholat", "prat", "test", "Salut, \n est ce que ça te dis un petit date demain ?\n");
+
+        ClientPOP3 monClientPOP = new ClientPOP3("pluton.aix.univ-amu.fr", "drabczuk", "drabczuk");
+        monClientPOP.readMailList();
+        monClientPOP.readMail(3175);
     }
 }

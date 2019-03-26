@@ -36,36 +36,96 @@ public class ClientSMTP {
             out.newLine();
             out.flush();
 
-            while (!Pattern.matches("[1-9]{3} ", in.readLine())) {}
+            System.out.println("avant la boucle");
+
+            while (' ' != in.readLine().charAt(3)) {}
+
+            System.out.println("après la boucle");
 
             out.write(new StringBuilder("MAIL FROM: ").append(from).toString());
             out.newLine();
             out.flush();
 
-            if (Pattern.matches("^[4-5]", in.readLine())) {
+            String retour = in.readLine();
+            if (Pattern.matches("^[4-5]", retour)) {
                 throw new Exception("SMTP error");
             }
+            else {
+                System.out.println(retour);
+            }
+
 
             out.write(new StringBuilder("RCPT TO: ").append(to).toString());
             out.newLine();
             out.flush();
 
-            if (Pattern.matches("^[4-5]", in.readLine())) {
+            retour = in.readLine();
+            if (Pattern.matches("^[4-5]", retour)) {
                 throw new Exception("SMTP error");
+            }
+            else {
+                System.out.println(retour);
             }
 
             out.write("DATA");
             out.newLine();
             out.flush();
 
-            if (Pattern.matches("^[4-5]", in.readLine())) {
+            retour = in.readLine();
+            if (Pattern.matches("^[4-5]", retour)) {
                 throw new Exception("SMTP error");
+            }
+            else {
+                System.out.println(retour);
+            }
+
+            out.write(new StringBuilder("FROM: ").append(from).toString());
+            out.newLine();
+            out.flush();
+
+            out.write(new StringBuilder("TO: ").append(to).toString());
+            out.newLine();
+            out.flush();
+
+            out.write(new StringBuilder("SUBJECT: ").append(subject).toString());
+            out.newLine();
+            out.flush();
+
+            out.write(body);
+            out.newLine();
+            out.flush();
+
+            out.write(".");
+            out.newLine();
+            out.flush();
+
+            retour = in.readLine();
+            if (Pattern.matches("^[4-5]", retour)) {
+                throw new Exception("SMTP error");
+            }
+            else {
+                System.out.println(retour);
+            }
+
+            out.write("QUIT");
+            out.newLine();
+            out.flush();
+
+            retour = in.readLine();
+            if (Pattern.matches("^[4-5]", retour)) {
+                throw new Exception("SMTP error");
+            }
+            else {
+                System.out.println(retour);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return true;
+    }//sendMail
+
+    public String getHostname() {
+        return hostname;
     }
 }
